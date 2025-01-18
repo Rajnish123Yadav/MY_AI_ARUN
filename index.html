@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arun, My Virtual Assistant</title>
+    <link rel="shortcut icon" href="img1.jpg">
+    <link rel="stylesheet" href="style.css">
+
+
+<!------------------------------------------------------------------------------->
+
+    <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Jaro:opsz@6..72&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital@1&display=swap');
+*{
+    margin: 0;
+    padding: 0px;
+    box-sizing: border-box;
+}
+body{
+    width: 100%;
+    height: 100%;
+    background-color: rgb(247, 105, 204);
+    display:flex;
+    align-items: center;
+    justify-content:center;
+    flex-direction: column;
+    gap:0px;   
+    background-color: #6b40f8;
+    background-color: #001f3f; /* Dark background for contrast */
+    overflow: hidden;
+}
+body:hover{
+    background: #6b40f8;
+    transition: all .5s;
+}
+
+#logo
+{
+    width: 30vw;
+}
+#logo:hover
+{
+    width: 40vw;
+    transition: all .7s;
+    cursor: pointer;
+    
+}
+
+
+#intr-name
+{
+    color:#FF1493;
+    font-family: "Jaro", sans-serif;
+    margin-top: -20px;
+    text-align: center;
+}
+#name{
+    margin: auto;
+    color:rgb(9, 242, 16);
+    font-size:50px;
+}
+
+#name:hover
+{
+    color: rgb(247, 11, 227);
+    transition: all .5s;
+    letter-spacing:5px;
+    cursor: pointer;
+}
+#name2{
+    font-size:50px;
+    color: green;
+}
+#voice{
+    width:20vw;
+    display:none;
+}
+#btn
+{
+    width:40%;
+    background:linear-gradient(to right,rgb(231, 15, 15),rgb(25, 58, 246));
+    padding: 10px;
+    display: flex;
+    color:rgb(211, 218, 26); 
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    font-size:20px;
+    border-radius:100px;
+    border:none;
+    box-shadow: 2px 2px 10px rgb(21,145,207),2px 2px 10px rgb(201,41,116);
+    transition: all 0.5s;
+    cursor:pointer;
+}
+#btn:hover
+{
+    box-shadow: 2px 2px 20px rgb(21,145,207),2px 2px 20px rgb(201, 41,116);
+    letter-spacing:3px;
+}
+/* Youtube Voice assis */
+.Youtube-btn
+{
+    margin-top: 20px;
+    background:linear-gradient(to right,rgb(231, 15, 15),rgb(25, 58, 246));
+    width:40%;
+    justify-content:center;
+    text-align: center;
+    padding: 5px;
+    gap:5px;
+    font-size:20px;
+    border-radius:30px;
+    border:none;
+}
+
+
+.Youtube-btn-main{
+    justify-content:center;
+    gap: 10px;
+    display: flex;
+    margin-top: -5px;
+}
+.Youtube-btn:hover
+{
+    box-shadow: 2px 5px 10px rgb(7, 9, 10),2px 2px 10px rgb(76, 232, 154);
+    letter-spacing:3px;
+    background: aqua;
+    color: rgb(39, 2, 150);
+    font-weight: 900;
+    font-style:oblique;
+    cursor:pointer;
+    font-family: "Jaro", sans-serif;
+    transition: all 0.5s;
+}
+#songInput
+{
+    margin: 10px;
+    border-radius:10px;   
+    text-align: center;
+    padding: 3px;
+    border: none;
+    
+}
+
+
+    </style>
+
+
+<!------------------------------------------------------------------------------->
+
+</head>
+<body>
+    <img src="img1.png" alt="logo" id="logo">
+
+    <div id="intr-name">
+        <h1> <span id="name">HEllO I'm Arun</span>
+    </div>
+        
+        <!-- Your<span id="name2"> Virtual Assistant</span> -->
+        </h1>
+
+    <img src="brain-11343_256.gif" alt="voice img" id="voice">
+
+    <button id="btn"  onclick="startListening()">
+        <span id="content">Click here and talk to me...</span> 
+    </button>
+
+    
+    <input type="text" id="songInput" placeholder="Enter song name">
+    
+     
+    <div class="Youtube-btn-main">
+       
+        <button class="Youtube-btn" onclick="playSong()" >Play Song</button> 
+        <button class="Youtube-btn"onclick="startListening()">🎤 Speak</button>
+    </div>
+
+
+
+    <!---------------------------------JavaScript-------------------------------------->
+ 
+    <script>
+        const btn = document.querySelector("#btn"); 
+        const content = document.querySelector("#content");
+
+        //content.innerHTML = "welcome";
+
+        const obj = {
+            name: "Rajnish Yadav"
+        };
+
+        console.log(obj.name);
+
+        // Function for speech synthesis
+        function speak(text) {
+            const text_speak = new SpeechSynthesisUtterance(text);
+            text_speak.rate = 1;
+            text_speak.pitch = 1;
+            text_speak.volume = 1;
+            text_speak.lang = 'hi-GB'; 
+
+            const synth = window.speechSynthesis;
+            const voices = synth.getVoices();
+            text_speak.voice = voices.find(voice => voice.lang === 'hi-GB') || voices[0]; // Default to the first available voice if hi-GB isn't found
+
+            synth.speak(text_speak);
+            console.log(text_speak);
+            console.log(text_speak.lang);
+        }
+
+            
+
+
+        // Function wishMe() will call when page loaded 
+        
+        function wishMe() {
+
+            speak("welcome"); //greats
+
+            const day = new Date();
+            const hours = day.getHours();
+            if (hours >= 0 && hours < 12) 
+            {
+                speak("Good Morning Sir");
+                //content.innerHTML = "Good Morning Sir";
+            } 
+            else if (hours >= 12 && hours < 16) 
+            {
+                speak("Good Afternoon Sir");
+                //content.innerHTML = "Good Afternoon Sir";
+            } 
+            else 
+            {
+                speak("Good Evening Sir");
+                //content.innerHTML = "Good Night Sir";
+            }
+        }
+
+        window.addEventListener('load', () => { 
+            wishMe();
+        });
+
+        // Check for speech recognition and synthesis support
+        const speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        console.log('Speech Recognition Supported:', !!speechRecognition);
+        console.log('Speech Synthesis Supported:', !!(window.speechSynthesis));
+
+        if (!speechRecognition) {
+            alert("Sorry, your browser does not support speech recognition.");
+        } else {
+            const recognition = new speechRecognition();
+
+            recognition.onstart = () => {
+                content.innerHTML = "Listening...";
+            };
+
+            recognition.onresult = (event) => {
+                console.log("Voice recognized");
+                const currentIndex = event.resultIndex;
+                const transcript = event.results[currentIndex][0].transcript;
+
+                content.innerText = transcript;
+
+                console.log(event);
+                console.log(transcript);
+
+                takeCommand(transcript.toLowerCase());
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Error occurred in speech recognition:", event.error);
+            };
+
+
+
+
+            recognition.onend = () => {
+                content.textContent = "Click to speak again";
+            };
+
+
+
+
+            btn.addEventListener("click", () => {
+                recognition.start();
+                console.log("btn clicked");
+            });
+
+            // Function to when give commands 
+            function takeCommand(message) 
+            {
+                if (message.includes("hello")) {
+                    speak("Hello sir, what can I help you ?");
+                    content.innerHTML = "Hello sir, what can I help you ?";
+                }
+
+
+                    //For me when I call Hii Tarun then He Say me Hii Kya Mama 
+                    else if (message.includes("tarun")) 
+                    {
+                        speak("Hi Mama");  
+                    } 
+
+                    else if (message.includes("arun")) 
+                    {
+                        speak("Hi Mama");  
+                    } 
+
+                    else if (message.includes("what are you doing")) 
+                    {
+                        speak("Nothing Mama, i'm a robo than i'm just recognite your voice");  
+                    } 
+
+
+                    else if (message.includes("your name")) 
+                    {
+                        speak("My name is Arun and i'm a robo");  
+                    } 
+
+                    else if (message.includes("your babu name")) 
+                    {
+                        speak("My babu name is tarun");  
+                    } 
+
+                    else if (message.includes("your mama do")) 
+                    {
+                        speak("my mama is a doctor and turun's mama is a software engineer and also my nana is a doctor ok.");  
+                    } 
+
+                    else if (message.includes("your mama name")) 
+                    {
+                        speak("My mama's name? Okay, let me count how many mamas I have. First, there's Mama Rajnish, or Dheeraj. Second, we have Mama Ritesh. Third, there's Mama Polu. Fourth is Mama Karan. Then comes Ayush, Chandan, and Shree Walli. Finally, there's Prince. And that's all of them!");
+  
+                    } 
+
+
+                    
+
+
+                    //For Date date is a pre-defined javascript method...................................................................................
+
+                    else if(message.toLowerCase().includes("Date"))
+                    {
+                        const date = new Date().toLocaleDateString();
+                        speak(`The date is ${date}`);
+                    }
+
+                    else if(message.toLowerCase().includes("date"))
+                    {
+                        
+                        const date = new Date().toLocaleDateString();
+                        speak(`The date is ${date}`);
+
+                    }
+
+                //For time I am Using here time method which is pre-defined method if i talk(fre-defined method).........................................
+
+                else if (message.includes("time")) 
+                {
+                    const time = new Date().toLocaleTimeString();
+                    speak(`The time is ${time}`);
+                } 
+                else 
+                {
+                    speak("I didn't understand that. Can you repeat?");
+                }
+            }
+
+
+
+
+
+            //--------------------To open youtube and recommonded song -----------------------------------------------------------
+            // Play the song by searching on YouTube-----------------------------------
+            function playSong() {
+            const songName = document.getElementById('songInput').value.trim();
+            if (songName) {
+                const query = songName.replace(/ /g, '+');
+                const url = `https://www.youtube.com/results?search_query=${query}`;
+                window.open(url, '_blank');
+            } else {
+                alert("Please enter or say a song name!");
+            }
+        }
+
+        // Start voice recognition
+        function startListening() {
+            // Check if SpeechRecognition is supported
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("Speech recognition is not supported in your browser.");
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-BG'; // Set language
+            recognition.interimResults = false;
+
+            recognition.onstart = () => {
+                console.log("Listening...");
+            };
+
+            recognition.onspeechend = () => {
+                recognition.stop();
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('songInput').value = transcript; // Update the input box
+                playSong(); // Automatically play the song after recognizing
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Speech recognition error:", event.error);
+                alert("Could not recognize speech. Please try again.");
+            };
+
+            recognition.start();
+        }
+
+
+
+
+            //To check any error issues Occur Or Not..............................................................................
+
+            recognition.onerror = (event) => {
+            console.error("Error occurred in speech recognition:", event.error);
+        if (event.error === "no-speech") 
+        {
+            speak("I didn't hear anything. Please try speaking again.");
+        } 
+        else if (event.error === "audio-capture") 
+        {
+            speak("Microphone not detected. Please check your microphone.");
+        } 
+        else if (event.error === "not-allowed") 
+        {
+            speak("Permission to use the microphone was denied.");
+        } 
+        else 
+        {
+            speak("An error occurred. Please try again.");
+        }
+    };
+
+}
+
+
+
+    </script> 
+</body>
+</html>
